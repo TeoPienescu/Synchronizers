@@ -1,3 +1,5 @@
+package serie1
+
 import isel.leic.pc.utils.*
 import java.lang.Thread.currentThread
 import java.util.*
@@ -19,13 +21,16 @@ import kotlin.time.Duration as Duration
  */
 class Exchanger<T> {
     private val monitor = ReentrantLock()
-    private val waiterThreadQueue: Queue<WaiterThread<T>> = LinkedList<WaiterThread<T>>()
+    private var waiterThread: WaiterThread<T>? = null
     private val exchangingThreadQueue: Queue<ExchangingThread<T>> = LinkedList<ExchangingThread<T>>()
     /**
      * Value wrappers for the waiting and exchanging thread.
      * The [WaiterThread] value can be null to signal that it already gave its value to the other thread.
      */
-    class WaiterThread<T>(var value: T?, val condition: Condition)
+    class WaiterThread<T>(var value: T?, val condition: Condition){
+        val valueIsNull: Boolean
+            get() = value == null
+    }
     class ExchangingThread<T>(val value: T)
 
     @Throws(InterruptedException::class)
@@ -37,9 +42,9 @@ class Exchanger<T> {
              * It removes the first waiter thread value from the queue and calls a function to exchange the values
              * and notify the waiting thread to proceed with the exchange as well.
              */
-            if(waiterThreadQueue.isNotEmpty()){
-                val waiter = waiterThreadQueue.poll()
-                return exchangeAndNotifyWaiter(waiter,value)
+            if(waiterThread != null){
+                val waiter = waiterThread
+                return waiter?.let { exchangeAndNotifyWaiter(it,value) }
             }
 
             /**
@@ -52,7 +57,7 @@ class Exchanger<T> {
              * Creates a [WaiterThread] and adds it to the waiter thread values queue.
              */
             val waiter = WaiterThread<T>(value, monitor.newCondition())
-            waiterThreadQueue.add(waiter)
+            waiterThread = waiter
 
             val dueTime = timeout.dueTime()
 
@@ -66,16 +71,16 @@ class Exchanger<T> {
             do{
                 try {
                     waiter.condition.await(dueTime)
-                    if (waiter.value == null) {
+                    if (waiter.valueIsNull) {
                         return exchangingThreadQueue.poll().value
                     }
                     if (dueTime.isPast) {
-                        waiterThreadQueue.remove(waiter)
+                        waiterThread = null
                         return null
                     }
                 }catch (e: InterruptedException){
                     currentThread().interrupt()
-                    waiterThreadQueue.remove(waiter)
+                    waiterThread = null
                     throw e
                 }
             }while(true)
@@ -94,11 +99,7 @@ class Exchanger<T> {
             val waiterValue = waiter.value
             waiter.value = null
             waiter.condition.signal()
+            waiterThread = null
             return waiterValue
     }
 }
-
-
-
-
-
