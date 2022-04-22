@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ExchangerTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2022-04-10T13:09:27" hostname="LAPTOP-8IJG8NP1" time="3.591">
+<testsuite name="ExchangerTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2022-04-22T20:49:29" hostname="LAPTOP-8IJG8NP1" time="11.063">
   <properties/>
-  <testcase name="Exchange between two threads without timeout" classname="ExchangerTest" time="0.038"/>
-  <testcase name="Thread 1 times out but other thread gets in to trade with Thread 2 before Thread's 2 timeout" classname="ExchangerTest" time="2.007"/>
-  <testcase name="Thread 3 times out after Thread 1 and Thread 2 exchange values" classname="ExchangerTest" time="0.003"/>
-  <testcase name="Exchange between two threads with timeout" classname="ExchangerTest" time="0.512"/>
-  <testcase name="Exchange with 4 threads at the same time" classname="ExchangerTest" time="0.015"/>
-  <testcase name="Interrupting Thread1 while it's waiting gives interrupted exception" classname="ExchangerTest" time="0.004"/>
-  <testcase name="Interrupting Thread 1 while it is waiting for Thread 2 gives interrupted exception and gives null to Thread 2 after timeout" classname="ExchangerTest" time="1.01"/>
+  <testcase name="Exchange between two threads and the third times out" classname="ExchangerTest" time="3.02"/>
+  <testcase name="First thread times out and then next two exchange" classname="ExchangerTest" time="5.014"/>
+  <testcase name="First thread times out then all get null" classname="ExchangerTest" time="3.027"/>
+  <testcase name="Interruption throws InterruptedException" classname="ExchangerTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

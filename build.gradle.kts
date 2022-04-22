@@ -13,6 +13,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.slf4j:slf4j-simple:1.8.0-beta4")
     testImplementation(kotlin("test"))
 }
 
