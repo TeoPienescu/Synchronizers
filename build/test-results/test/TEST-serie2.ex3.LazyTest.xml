@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="serie2.ex3.LazyTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-05-14T13:32:41" hostname="LAPTOP-8IJG8NP1" time="0.082">
+  <properties/>
+  <testcase name="Only initializes value once" classname="serie2.ex3.LazyTest" time="0.082"/>
+  <system-out><![CDATA[First access to value: 76 ms
+Second access to value: 0 ms
+Third access to value: 0 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
     implementation("org.slf4j:slf4j-simple:1.8.0-beta4")
+    implementation("junit:junit:4.13.1")
     testImplementation(kotlin("test"))
 }
 

@@ -2,7 +2,10 @@ package serie2.Ex4
 
 import java.util.concurrent.atomic.AtomicReference
 
-class Queue<T>() {
+/**
+ * Queue implementation using Michael-Scott algorithm
+ */
+class Queue<T> {
 
     private class Node<T>(val value: T? = null) {
         val next = AtomicReference<Node<T>?>()
@@ -20,9 +23,7 @@ class Queue<T>() {
     }
 
     /**
-     * Michael&Scott algorithm
-     * for FIFO Enqueue
-     *
+     * Adds an element to the queue
      */
     fun put(elem: T) {
         val newNode = Node<T>(elem)
@@ -42,16 +43,20 @@ class Queue<T>() {
         } while (true)
     }
 
+    /**
+     * Removes an element from the queue
+     */
     fun take(): T? {
         do {
             val obsHead = head.get()
-            val obsHeadNext = obsHead.next.get()
-            if (obsHead == head.get()) {
-                obsHeadNext ?: return null
-                if (head.compareAndSet(obsHead, obsHeadNext)) {
-                    return obsHead.value
+            val obsNext = obsHead.next.get()
+            if(obsHead == head.get()){
+                obsNext ?: return null
+                if (head.compareAndSet(obsHead, obsNext)) { //Only removes if the head is the same as the observed head.
+                    return obsNext.value
                 }
             }
         } while (true)
     }
+
 }
