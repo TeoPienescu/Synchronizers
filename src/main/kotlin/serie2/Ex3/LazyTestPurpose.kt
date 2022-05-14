@@ -27,25 +27,20 @@ class LazyTestPurpose<T>(initializer: () -> T) {
 
     val value: T
         get() {
-            while (true) {
-                val obsState = lazyState.get()
-                 if (obsState == State.INITIALIZED) {
-                    while (currentValue == null) Thread.yield()
-                    return currentValue!!
-                } else {
-                    if (lazyState.compareAndSet(obsState, State.INITIALIZED)) {
-                        currentValue = init()
-                        //Added for test purposes
-                        while (true) {
-                            val obsCounter = countInits.get()
-                            if (obsCounter == countInits.get()) {
-                                if (countInits.compareAndSet(obsCounter, obsCounter + 1)) break
-                            }
-                        }
-                        return currentValue!!
+            val obsState = lazyState.get()
+            return if (obsState == State.UNINITIALIZED && lazyState.compareAndSet(obsState, State.INITIALIZED)) {
+                currentValue = init()
+                //Added for test purposes
+                while (true) {
+                    val obsCounter = countInits.get()
+                    if (obsCounter == countInits.get()) {
+                        if (countInits.compareAndSet(obsCounter, obsCounter + 1)) break
                     }
                 }
+                currentValue!!
+            }else {
+                while (currentValue == null) Thread.yield() // Waits for value to be produced giving the resources to other threads
+                currentValue!!
             }
         }
 }
-
