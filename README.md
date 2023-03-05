@@ -6,7 +6,7 @@ In this repository you will find some implementations of synchronizers and threa
 
   - **Blocking Message Queue**: A blocking queue that can be used to exchange messages between threads.
     - [**Classic Aproach**](https://github.com/TeoPienescu/Synchronizers/blob/main/src/main/kotlin/serie1/Ex2/BlockingMessageQueue.kt): Both enqueue and dequeue methods are blocking.
-    - [**Future Implementation**](https://github.com/TeoPienescu/Synchronizers/blob/main/src/main/kotlin/serie1/Ex4/BlockingMessageQueueFuture.kt): Dequeue method returns a [future](https://github.com/franciscocostalap/Synchronizers/blob/main/serie1/src/main/kotlin/pt/isel/pc/sync/FutureImpl.kt), thus is non blocking.
+    - [**Future Implementation**](https://github.com/TeoPienescu/Synchronizers/blob/main/src/main/kotlin/serie1/Ex4/BlockingMessageQueueFuture.kt): Dequeue method returns a [future](https://github.com/TeoPienescu/Synchronizers/blob/main/src/main/kotlin/serie1/Ex4/BlockingMessageQueueFuture.kt#L135), thus is non blocking.
 
   - [**Thread Pool Executor**](https://github.com/TeoPienescu/Synchronizers/blob/main/src/main/kotlin/serie1/Ex3/ThreadPoolExecutor.kt): 
   A thread pool that can be used to execute tasks concurrently, without the need to manage thread creation and destruction.
