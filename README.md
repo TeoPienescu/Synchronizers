@@ -30,6 +30,6 @@ In this repository you will find some implementations of synchronizers and threa
   Every synchronizer and component was properly tested using both unit and parameterized tests.
   The unit tests also serve as examples of how to use them properly.
   
-  - Lock based(https://github.com/TeoPienescu/Synchronizers/tree/main/src/test/kotlin/serie1)
-  - Lock free(https://github.com/TeoPienescu/Synchronizers/tree/main/src/test/kotlin/serie2)
+  - [Lock based](https://github.com/TeoPienescu/Synchronizers/tree/main/src/test/kotlin/serie1)
+  - [Lock free](https://github.com/TeoPienescu/Synchronizers/tree/main/src/test/kotlin/serie2)
   
